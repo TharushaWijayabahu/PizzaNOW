@@ -165,8 +165,8 @@ header .cart-items {
 	padding-top: 10px !important;
 	margin-bottom: 5px;
 	font-size: 13px;
+	font-weight: bold;
 	 padding: 0px 10px 0px 10px;
-	font-family: 'Open Sans', sans-serif !important;
 	letter-spacing: 0px;
 }
 .menu-item-desc {
@@ -178,7 +178,6 @@ header .cart-items {
 	overflow-y: hidden;
 	height: 40px;
 	color: #8e8e8e;
-	font-family: 'Open Sans', sans-serif;
 }
 .menu-price-container{
 	padding-left: 0px;

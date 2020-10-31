@@ -9,6 +9,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<!--		<link rel="stylesheet" href="--><?php //echo base_url(); ?><!--/assets/css/font-awesome.min.css">-->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.0/css/all.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
 		<link rel="stylesheet" href="<?php echo base_url(); ?>/assets/css/common.css">
 		<link rel="stylesheet" href="<?php echo base_url(); ?>/assets/css/shopping-cart.css">
 		<script src="<?php echo base_url(); ?>/assets/js/jquery-3.5.1.min.js"></script>
@@ -41,7 +42,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 										<i class="fas fa-pizza-slice"></i></span>PIZZA</a>
 							</li>
 							<li class="nav-item px-lg-2"><a class="nav-link"
-															href="<?php echo base_url(); ?>drink">
+															href="<?php echo base_url(); ?>side">
 									<span class="d-inline-block d-lg-none icon-width">
 										<i class="fa fa-cutlery" aria-hidden="true"></i></span>SIDES</a>
 							</li>
@@ -60,13 +61,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						<div class="container">
 							<ul class="nav-account d-flex">
 								<li>
+								<?php if (isset($itemList)) { ?>
 									<a href="<?php echo base_url(); ?>cart" class="round-icon-btn text-left cart-nav"
 									   title=""
 									   data-toggle="tooltip" data-placement="left" data-original-title="Your Basket">
 										<i class="fa fa-shopping-basket" aria-hidden="true"></i>
 										<label class="cart-items cart-item-count"
-											   style="background-color: rgb(255, 0, 0);">1</label>
+											   style="background-color: rgb(255, 0, 0);"><?php echo count($itemList);?></label>
 									</a>
+								<?php }else{ ?>
+									<a href="<?php echo base_url(); ?>cart" class="round-icon-btn text-left cart-nav"
+									   title=""
+									   data-toggle="tooltip" data-placement="left" data-original-title="Your Basket">
+										<i class="fa fa-shopping-basket" aria-hidden="true"></i>
+										<label class="cart-items cart-item-count">0</label>
+									</a>
+									<?php } ?>
 								</li>
 								<li>
 									<a href="<?php echo base_url(); ?>register" class="round-icon-btn shared-04"

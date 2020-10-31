@@ -1,7 +1,7 @@
 		</div>
 
 		<!-- Footer -->
-		<footer class="page-footer font-small bg-indigo">
+		<footer class="page-footer font-small bg-indigo" style="margin-top: 2%">
 
 			<!-- Footer Links -->
 			<div class="container">
@@ -71,7 +71,7 @@
 				<hr class="clearfix d-md-none rgba-white-light" style="margin: 10% 15% 5%;">
 
 				<!-- Grid row-->
-				<div class="row pb-3">
+				<div class="row pb-3 text-center">
 
 					<!-- Grid column -->
 					<div class="col-md-12">

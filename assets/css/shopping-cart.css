@@ -53,7 +53,7 @@
 /* Apply clearfix in a few places */
 /* Apply dollar signs */
 .product .product-price:before, .product .product-line-price:before, .totals-value:before {
-	content: '$';
+	content: 'Rs ';
 }
 
 /* Body/Header stuff */
@@ -102,7 +102,7 @@ label {
 	line-height: 1.4em;
 }
 .product .product-quantity input {
-	width: 40px;
+	width: 50px;
 }
 .product .remove-product {
 	border: 0;
@@ -152,6 +152,134 @@ label {
 
 .checkout:hover {
 	background-color: #494;
+}
+.topping-heading{
+	font-size: 14px;
+	font-weight: bold;
+}
+.customize-pizza {
+	border: 1px solid #ccc;
+	padding: 6px;
+	cursor: pointer;
+	min-height: 62px;
+	/* background-color: #e13340; */
+	margin-top: 5px;
+	-webkit-transition-duration: 0.2s;
+	transition-duration: 0.2s;
+	border-radius: 5px;
+	font-size: 14px;
+	/*font-weight: bold;*/
+}
+.customize-pizza-topping{
+	border: 1px solid #ccc;
+	padding: 6px;
+	cursor: pointer;
+	min-height: 62px;
+	margin-top: 5px;
+	-webkit-transition-duration: 0.2s;
+	transition-duration: 0.2s;
+	border-radius: 5px;
+	font-size: 14px;
+}
+.customize-pizza:hover .customize-pizza-topping:hover{
+	border: 1px solid #ccc;
+	padding: 6px;
+	cursor: pointer;
+	min-height: 62px;
+	margin-top: 5px;
+	-webkit-transition-duration: 0.2s;
+	transition-duration: 0.2s;
+	border-radius: 5px;
+	color: rgb(210 65 90);
+}
+.customize-pizza-topping:hover{
+	border: 1px solid #ccc;
+	padding: 6px;
+	cursor: pointer;
+	min-height: 62px;
+	margin-top: 5px;
+	-webkit-transition-duration: 0.2s;
+	transition-duration: 0.2s;
+	border-radius: 5px;
+	color: rgb(210 65 90);
+}
+.customize-btn{
+	text-decoration: none;
+	color: #212529;
+	font-weight: bold;
+	font-size: 16px;
+}
+.customize-btn:hover{
+	text-decoration: none;
+	color: rgb(210 65 90);
+}
+.customize-btn:focus{
+	text-decoration: none;
+}
+.item-selected{
+	border: 2px solid #70a401;
+}
+.font-family-main {
+	font-family: 'United Sans Cd Md' !important;
+	font-weight: bold;
+	letter-spacing: 1.5px;
+}
+.margin-bottom-10px {
+	margin-bottom: 10px !important;
+}
+
+
+element.style {
+}
+.margin-bottom-10px {
+	margin-bottom: 10px !important;
+}
+.font-family-main {
+	font-family: 'United Sans Cd Md' !important;
+	font-weight: bold;
+	letter-spacing: 1.5px;
+}
+h1, h2, h3, h4, h5, .panel-title, .qty-value, .addToBasket, .font-family1 {
+	/* font-family: 'United Sans Cd Md'; */
+	font-family: 'Open Sans Condensed', sans-serif !important;
+	color: #4d4d4d;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	letter-spacing: 0px;
+	-webkit-font-smoothing: subpixel-antialiased;
+	font-weight: bold;
+}
+
+@media (min-width: 34em) {
+	.card-columns {
+		-webkit-column-count: 2;
+		-moz-column-count: 2;
+		column-count: 2;
+	}
+}
+
+@media (min-width: 48em) {
+	.card-columns {
+		-webkit-column-count: 3;
+		-moz-column-count: 3;
+		column-count: 3;
+	}
+}
+
+@media (min-width: 62em) {
+	.card-columns {
+		-webkit-column-count: 4;
+		-moz-column-count: 4;
+		column-count: 4;
+	}
+}
+
+@media (min-width: 75em) {
+	.card-columns {
+		-webkit-column-count: 5;
+		-moz-column-count: 5;
+		column-count: 5;
+	}
 }
 
 /* Make adjustments for tablet */
