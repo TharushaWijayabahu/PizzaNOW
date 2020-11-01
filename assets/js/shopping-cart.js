@@ -14,17 +14,16 @@ $(document).ready(function() {
 		$.ajax({
 			url: url,
 			method: "POST",
-			dataType: "json",
+			// dataType: "json",
 			data: {
 				'id': id,
 				'quantity': quantity
 			},
-			success: function(response) {
-				console.log(response.data());
-				updateQuantity(this);
+			success: function() {
+				location.reload();
 			},
-			error: function(response) {
-				console.log(response);
+			error: function() {
+				alert('please try again')
 			}
 		})
 		updateQuantity(this);
@@ -36,13 +35,12 @@ $(document).ready(function() {
 		$.ajax({
 			url: url,
 			method: "POST",
-			dataType: "json",
 			data: id,
-			success: function(response) {
-				console.log(response.data);
+			success: function() {
+				location.reload();
 			},
-			error: function(response) {
-				console.log(response.data);
+			error: function() {
+				alert('please try again')
 			}
 		})
 		removeItem(this);
@@ -50,33 +48,26 @@ $(document).ready(function() {
 
 	$('.btn-customize-mobile button').click( function() {
 
-		let sideID = $(this).data("side_id");
-		let sideName = $(this).data("side_name");
-		let sideDescription = $(this).data("side_description");
-		let sideImgURL = $(this).data("side_img_url");
-		let sidePrice = $(this).data("side_price");
-		let sideQty = $(this).data("side_qty");
-		let url = "http://localhost/2017296/PizzaNow/cart/addToCart"
-
+		let url = "http://localhost/2017296/PizzaNow/cart/addToCart";
 		let item = {
-			'sideID' :sideID,
-			'sideName' :sideName,
-			'sideDescription' :sideDescription,
-			'sideImgURL' :sideImgURL,
-			'sidePrice' :sidePrice,
-			'sideQty' :sideQty,
+			'type' : 'SIDE',
+			'id' :$(this).data("side_id"),
+			'name' :$(this).data("side_name"),
+			'description' :$(this).data("side_description"),
+			'imgUrl' :$(this).data("side_img_url"),
+			'price' :$(this).data("side_price"),
+			'qty' :$(this).data("side_qty"),
 		}
 		console.log(item);
 		$.ajax({
 			url: url,
 			method: "POST",
-			dataType: "json",
 			data: item,
-			success: function(response) {
-				console.log(response);
+			success: function() {
+				window.location = '/2017296/PizzaNow/cart';
 			},
-			error: function(response) {
-				console.log(response);
+			error: function() {
+				alert('please try again');
 			}
 		})
 	});

@@ -161,6 +161,16 @@ header .cart-items {
 	border-radius: 3px;
 	margin-bottom: 10px;
 }
+
+.btn-customize-pizza{
+	width: 100%;
+	font-size: 13px;
+	border-radius: 3px;
+	margin-bottom: 10px;
+	margin-top: 7px;
+	padding: 8px;
+}
+
 .menu-item-name {
 	padding-top: 10px !important;
 	margin-bottom: 5px;

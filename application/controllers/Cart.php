@@ -28,26 +28,35 @@ class Cart extends MY_Controller {
 
 	function addToCart() {
 		$item = new stdClass;
-		$item->id = $this->input->post('sideID');
-		$item->name = $this->input->post('sideName');
-		$item->description = $this->input->post('sideDescription');
-		$item->imgUrl = $this->input->post('sideImgURL');
-		$item->price = $this->input->post('sidePrice');
-		$item->qty = $this->input->post('sideQty');
+		$item->type = $this->input->post('type');
+		$item->id = $this->input->post('id');
+		$item->name = $this->input->post('name');
+		$item->description = $this->input->post('description');
+		$item->imgUrl = $this->input->post('imgUrl');
+		$item->price = $this->input->post('price');
+		$item->qty = $this->input->post('qty');
 		$item->total = $item->qty * $item->price;
 		$item->isNew = true;
 		$total = 0;
+		if($item->type==='PIZZA'){
+			$item->selectedTopping = $this->input->post('selectedTopping');
+			$item->size = $this->input->post('size');
+			$item->itemTotal = $this->input->post('total');
+			$item->total = $this->input->post('total');
+		}
 
 		if ($this->session->has_userdata('itemList')) {
 			$itemList = $this->session->userdata('itemList');
 			$totalAmount = $this->session->userdata('totalAmount');
-			foreach ($itemList as $row => $row_value) {
-				if (($item->id) == ($row_value->id)) {
-					$row_value->qty += 1;
-					$row_value->total = ($row_value->qty)*($item->total);
-					$item->isNew = false;
-					$total = $totalAmount + $item->total;
-					break;
+			if($item->type !== 'PIZZA'){
+				foreach ($itemList as $row => $row_value) {
+					if (($item->imgUrl) == ($row_value->imgUrl)) {
+						$row_value->qty += 1;
+						$row_value->total = ($row_value->qty)*($item->total);
+						$item->isNew = false;
+						$total = $totalAmount + $item->total;
+						break;
+					}
 				}
 			}
 			if($item->isNew){
@@ -58,11 +67,19 @@ class Cart extends MY_Controller {
 			$this->session->set_userdata('totalAmount',$total);
 		} else {
 			$uniqId = uniqid();
-			$list = array(
-				'userId' => $uniqId,
-				'itemList' => array($item),
-				'totalAmount' => ($item->total)*($item->qty)
-			);
+			if($item->type !== 'PIZZA'){
+				$list = array(
+					'userId' => $uniqId,
+					'itemList' => array($item),
+					'totalAmount' => ($item->total)*($item->qty)
+				);
+			}else{
+				$list = array(
+					'userId' => $uniqId,
+					'itemList' => array($item),
+					'totalAmount' => $item->total
+				);
+			}
 			$this->session->set_userdata($list);
 		}
 		$this->index();
@@ -102,10 +119,17 @@ class Cart extends MY_Controller {
 		$totalAmount = $this->session->userdata('totalAmount');
 		foreach ($itemList as $row => $row_value) {
 			if ($row == $id) {
-				$total = $row_value->total;
-				$row_value->qty = $quantity;
-				$row_value->total = $quantity * $row_value->price;
-				$totalAmount = $totalAmount + ($row_value->total - $total);
+				if($row_value->type !== 'PIZZA'){
+					$total = $row_value->total;
+					$row_value->qty = $quantity;
+					$row_value->total = $quantity * $row_value->price;
+					$totalAmount += ($row_value->total - $total);
+				}else{
+					$total = $row_value->total;
+					$row_value->qty = $quantity;
+					$row_value->total = $quantity * $row_value->itemTotal;
+					$totalAmount +=  ($row_value->total - $total);
+				}
 				$this->session->set_userdata('itemList',$itemList);
 				$this->session->set_userdata('totalAmount',$totalAmount);
 				break;

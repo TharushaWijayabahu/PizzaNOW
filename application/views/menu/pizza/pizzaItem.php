@@ -1,6 +1,5 @@
 <h1 class="text-md-center text-sm-center text-lg-center">PIZZA</h1>
 <?php if (isset($pizzaItem['pizzaItem'])) {
-	$total = 0.00;
 	?>
 	<div class="container">
 		<div class="row">
@@ -39,7 +38,7 @@
 							<h5 class="mb-0">
 								<button class="btn btn-link customize-btn" data-toggle="collapse"
 										data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-									Select Size
+									Select Size *
 									<span id="selected-size"></span>
 								</button>
 							</h5>
@@ -53,6 +52,8 @@
 											 data-pizza_id="<?php echo $pizzaItem['pizzaItem'][0]->pizza_id; ?>"
 											 data-pizza_size="Small"
 											 data-pizza_price="<?php echo $pizzaItem['pizzaItem'][0]->pizza_s_price; ?>"
+											 data-pizza_description="<?php echo $pizzaItem['pizzaItem'][0]->pizza_description; ?>"
+											 data-pizza_img_url="<?php echo $pizzaItem['pizzaItem'][0]->pizza_img_url; ?>"
 											 class="customize-pizza">
 											<div class="row">
 												<div class="col-lg-4 col-md-12 col-xs-12 col-sm-12">
@@ -74,6 +75,8 @@
 											 data-pizza_id="<?php echo $pizzaItem['pizzaItem'][0]->pizza_id; ?>"
 											 data-pizza_size="Medium"
 											 data-pizza_price="<?php echo $pizzaItem['pizzaItem'][0]->pizza_m_price; ?>"
+											 data-pizza_description="<?php echo $pizzaItem['pizzaItem'][0]->pizza_description; ?>"
+											 data-pizza_img_url="<?php echo $pizzaItem['pizzaItem'][0]->pizza_img_url; ?>"
 											 class="customize-pizza">
 											<div class="row">
 												<div class="col-lg-4 col-md-12 col-xs-12 col-sm-12">
@@ -95,6 +98,8 @@
 											 data-pizza_id="<?php echo $pizzaItem['pizzaItem'][0]->pizza_id; ?>"
 											 data-pizza_size="Large"
 											 data-pizza_price="<?php echo $pizzaItem['pizzaItem'][0]->pizza_m_price; ?>"
+											 data-pizza_description="<?php echo $pizzaItem['pizzaItem'][0]->pizza_description; ?>"
+											 data-pizza_img_url="<?php echo $pizzaItem['pizzaItem'][0]->pizza_img_url; ?>"
 											 class="customize-pizza">
 											<div class="row">
 												<div class="col-lg-4 col-md-12 col-xs-12 col-sm-12">
@@ -152,6 +157,7 @@
 																Rs. <?php echo $item->topping_price; ?>
 															</span>
 														</div>
+
 													</div>
 												</div>
 											</div>
@@ -167,14 +173,14 @@
 						<div class="pizza-quantity col-lg-4 col-md-8 col-sm-8 col-xs-12 mx-auto">
 							<input class="quantity_val text-center"
 								   style="height: 38px;margin-top: 7px; float: left; width: 50px;"
-								   type="number" id="quantity" value="1" min="1">
+								   type="number" id="quantity" value=1 min="1">
 						</div>
-						<div class="col-lg-8 col-md-8 col-sm-4 col-xs-12 mx-auto">
-							<a href="#"
-							   class="btn btn-success btn-customize-mobile"
-							   style="margin-top: 7px; border-radius: 3px; padding: 8px;">
-								Add to cart Rs <?php echo $total ?>.00
-							</a>
+						<div class="btn-customize-pizza col-lg-8 col-md-8 col-sm-4 col-xs-12 mx-auto">
+							<button class="btn btn-success btn-block"
+							data-pizza_id = <?php echo $pizzaItem['pizzaItem'][0]->pizza_id;?>
+							>
+								Add to cart Rs <span class="total-value">0. 00</span>
+							</button>
 						</div>
 					</div>
 
@@ -187,60 +193,115 @@
 	$(document).ready(function() {
 		let selectedTopping = [];
 		let selectedPizza = [];
-		let is_checked = true;
+		let total = 0;
+
 		$(".customize-pizza-topping").on("click", function () {
-			let id = $(this).data('topping_id');
-			let name = $(this).data('topping_name');
-			let price = $(this).data('topping_price');
-			selectedTopping.push(id);
-			console.log(id, name, price, selectedTopping);
+			let topping = {
+				'toppingId' : $(this).data('topping_id'),
+				'toppingName': $(this).data('topping_name'),
+				'toppingPrice' : $(this).data('topping_price'),
+			}
+			let index  = selectedTopping.findIndex(x => x.toppingId === topping.toppingId);
+
+			if(index === -1){
+				selectedTopping.push(topping);
+			}else{
+				selectedTopping.splice(index,1);
+				if(selectedTopping.length ===0){
+					topping.toppingName = 'please select your toppings'
+				}
+			}
 			$(this).toggleClass('item-selected',this.checked);
 			$(this).parent('.customization').toggleClass('d-block');
-			// $('.customize-pizza-topping').addClass('item-selected');
-			$('#selected-topping').html(name + ' selected, ');
-
+			$('#selected-topping').html(selectedTopping.map(x => x.toppingName) + ' selected');
+			calculatePizzaTotal(this);
+			console.log(selectedTopping)
 		});
 
-		$(".customize-pizza").click(function (e) {
-
-			let pizza_id = $(this).data('pizza_id');
-			let pizza_name = $(this).data('pizza_name');
-			let pizza_size = $(this).data('pizza_size');
-			let pizza_price = $(this).data('pizza_price');
+		$(".customize-pizza").click(function () {
 			let pizza = {
-				'pizzaId' : pizza_id,
-				'pizzaName': pizza_name,
-				'pizzaSize' :pizza_size,
-				'pizzaPrice' : pizza_price,
+				'pizzaId' : $(this).data('pizza_id'),
+				'pizzaName': $(this).data('pizza_name'),
+				'pizzaSize': $(this).data('pizza_size'),
+				'pizzaPrice' : $(this).data('pizza_price'),
+				'pizzaDescription' : $(this).data('pizza_description'),
+				'pizzaImgUrl' : $(this).data('pizza_img_url'),
 				'is_selected' : true
 			}
-
-			console.log(selectedPizza.findIndex(x => x.pizzaId === pizza.pizzaId));
-			if((selectedPizza.findIndex(x => x.pizzaId === pizza.pizzaId)) === -1){
+			let index = selectedPizza.findIndex(x => x.pizzaId === pizza.pizzaId);
+			// console.log(index,pizza);
+			if(index === -1){
 				selectedPizza.push(pizza);
-				is_checked = true;
 			}else{
-				selectedPizza = [];
+				if(index === 0 && selectedPizza.length === 0){
+					pizza.pizzaSize = 'Please select size';
+					pizza.is_selected = true
+					selectedPizza.splice(index,1);
+				}else {
+					pizza.is_selected =true;
+					selectedPizza.splice(index,1);
+					selectedPizza.push(pizza);
+				}
 			}
-			$('#selected-size').html(pizza_size + ' selected');
 
-			if(is_checked){
-				$(this).toggleClass('item-selected', is_checked);
-				is_checked = false;
-			}else{
-				$(this).toggleClass('item-selected', is_checked);
-			}
-			console.log(is_checked, selectedPizza);
+			$('#selected-size').html(pizza.pizzaSize + ' selected');
+			// $(this).toggleClass('item-selected', pizza.is_selected);
+			calculatePizzaTotal(this);
+			console.log(index ,pizza.is_selected, selectedPizza);
 		});
 
 
 		$('.pizza-quantity input').change(function () {
 			let quantity = $(this).closest('.pizza-quantity').find('.quantity_val').val();
-			console.log(quantity);
+			calculatePizzaTotal(this);
+			// console.log(quantity);
 		})
 
-		function updateView(){
+		$('.btn-customize-pizza button').click( function() {
 
+			if (selectedPizza.length < 1) {
+				alert('Please select pizza size');
+			} else {
+				let quantity = $('.quantity_val').val();
+				let url = "http://localhost/2017296/PizzaNow/cart/addToCart"
+
+				let item = {
+					'type' : 'PIZZA',
+					'id': selectedPizza[0].pizzaId,
+					'name': selectedPizza[0].pizzaName,
+					'description': selectedPizza[0].pizzaDescription,
+					'imgUrl': selectedPizza[0].pizzaImgUrl,
+					'price': selectedPizza[0].pizzaPrice,
+					'size' : selectedPizza[0].pizzaSize,
+					'selectedTopping': selectedTopping,
+					'qty': quantity,
+					'total': total,
+				}
+				console.log(item);
+				$.ajax({
+					url: url,
+					method: "POST",
+					data: item,
+					success: function (data) {
+						window.location = '/2017296/PizzaNow/cart';
+					},
+					error: function (response) {
+						console.log(response);
+					}
+				})
+			}
+		});
+
+		function calculatePizzaTotal(){
+			let toppingPrice = selectedTopping.map(x => parseFloat(x.toppingPrice));
+			let pizzaPrice = selectedPizza.map(x => parseFloat(x.pizzaPrice));
+			let totTopping = toppingPrice.reduce((a,b) => a + b, 0);
+			let totPizza = pizzaPrice.reduce((a,b) => a + b, 0);
+			let quantity = $('.quantity_val').val();
+
+			total = (totTopping + totPizza) * parseInt(quantity);
+			console.log(total , parseInt(quantity));
+			$('.total-value').html(total.toFixed(2));
 		}
 	})
 </script>
