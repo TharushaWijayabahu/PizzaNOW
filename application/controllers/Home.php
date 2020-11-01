@@ -7,6 +7,18 @@ class Home extends MY_Controller {
 	}
 
 	public function index(){
-		$this->render('home/home');
+		if ($this->session->has_userdata('itemList')) {
+			$data = array(
+				'isSet' => true,
+				'itemList' => $this->session->userdata('itemList'),
+				'totalAmount' => $this->session->userdata('totalAmount')
+			);
+		} else {
+			$data = array(
+				'isSet' => false,
+				'itemList' => null
+			);
+		}
+		$this->render('home/home', $data);
 	}
 }

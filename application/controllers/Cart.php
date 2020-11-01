@@ -41,7 +41,7 @@ class Cart extends MY_Controller {
 		if($item->type==='PIZZA'){
 			$item->selectedTopping = $this->input->post('selectedTopping');
 			$item->size = $this->input->post('size');
-			$item->itemTotal = $this->input->post('total');
+			$item->itemTotal = $this->input->post('itemTotal');
 			$item->total = $this->input->post('total');
 		}
 
@@ -57,11 +57,14 @@ class Cart extends MY_Controller {
 						$total = $totalAmount + $item->total;
 						break;
 					}
+				}if($item->isNew){
+					array_push($itemList, $item);
+					$total = ($item->total)*($item->qty) + $totalAmount;
 				}
 			}
-			if($item->isNew){
+			if($item->isNew && $item->type == 'PIZZA'){
 				array_push($itemList, $item);
-				$total = ($item->total)*($item->qty) + $totalAmount;
+				$total = ($item->itemTotal)*($item->qty) + $totalAmount;
 			}
 			$this->session->set_userdata('itemList',$itemList);
 			$this->session->set_userdata('totalAmount',$total);

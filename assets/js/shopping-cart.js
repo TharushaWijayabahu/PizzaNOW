@@ -11,22 +11,28 @@ $(document).ready(function() {
 		let id = $(this).closest('.product-quantity').find('.item_id_val').val();
 		let url = "http://localhost/2017296/PizzaNow/cart/addQuantity"
 
-		$.ajax({
-			url: url,
-			method: "POST",
-			// dataType: "json",
-			data: {
-				'id': id,
-				'quantity': quantity
-			},
-			success: function() {
-				location.reload();
-			},
-			error: function() {
-				alert('please try again')
-			}
-		})
-		updateQuantity(this);
+		$('input[type="number"]').keydown(function (e) {
+			e.preventDefault();
+		});
+		if(parseInt(quantity) === 0){
+			alert('Please enter valid quantity')
+		}else{
+			$.ajax({
+				url: url,
+				method: "POST",
+				data: {
+					'id': id,
+					'quantity': quantity
+				},
+				success: function() {
+					location.reload();
+				},
+				error: function() {
+					alert('please try again')
+				}
+			})
+			updateQuantity(this);
+		}
 	});
 
 	$('.product-removal button').click( function() {
@@ -58,7 +64,6 @@ $(document).ready(function() {
 			'price' :$(this).data("side_price"),
 			'qty' :$(this).data("side_qty"),
 		}
-		console.log(item);
 		$.ajax({
 			url: url,
 			method: "POST",
@@ -112,7 +117,6 @@ $(document).ready(function() {
 		let price = parseFloat(productRow.children('.product-price').text());
 		let quantity = $(quantityInput).val();
 		let linePrice = price * quantity;
-		console.log('quantity ..' , quantity)
 		/* Update line price display and recalc cart totals */
 		productRow.children('.product-line-price').each(function () {
 			$(this).fadeOut(fadeTime, function() {

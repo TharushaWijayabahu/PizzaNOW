@@ -9,6 +9,18 @@ class Pizza extends MY_Controller {
 	}
 
 	public function index(){
+		if ($this->session->has_userdata('itemList')) {
+			$data = array(
+				'isSet' => true,
+				'itemList' => $this->session->userdata('itemList'),
+				'totalAmount' => $this->session->userdata('totalAmount')
+			);
+		} else {
+			$data = array(
+				'isSet' => false,
+				'itemList' => null
+			);
+		}
 		$data["pizzaItem"] = $this->PizzaModel->getAllPizzaItem();
 		$this->render('menu/pizza/pizza', $data);
 	}
@@ -26,7 +38,6 @@ class Pizza extends MY_Controller {
 
 				$this->render('menu/pizza/pizzaItem', $data);
 			}
-//			$this->render('menu/pizza/pizzaItem');
 		}
 	}
 }

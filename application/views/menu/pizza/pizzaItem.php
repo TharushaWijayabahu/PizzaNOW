@@ -215,7 +215,6 @@
 			$(this).parent('.customization').toggleClass('d-block');
 			$('#selected-topping').html(selectedTopping.map(x => x.toppingName) + ' selected');
 			calculatePizzaTotal(this);
-			console.log(selectedTopping)
 		});
 
 		$(".customize-pizza").click(function () {
@@ -229,7 +228,6 @@
 				'is_selected' : true
 			}
 			let index = selectedPizza.findIndex(x => x.pizzaId === pizza.pizzaId);
-			// console.log(index,pizza);
 			if(index === -1){
 				selectedPizza.push(pizza);
 			}else{
@@ -245,16 +243,19 @@
 			}
 
 			$('#selected-size').html(pizza.pizzaSize + ' selected');
-			// $(this).toggleClass('item-selected', pizza.is_selected);
 			calculatePizzaTotal(this);
-			console.log(index ,pizza.is_selected, selectedPizza);
 		});
 
 
 		$('.pizza-quantity input').change(function () {
 			let quantity = $(this).closest('.pizza-quantity').find('.quantity_val').val();
+			$('input[type="number"]').keydown(function (e) {
+				e.preventDefault();
+			});
+			if(parseInt(quantity)===0){
+				alert('please enter valid quantity');
+			}
 			calculatePizzaTotal(this);
-			// console.log(quantity);
 		})
 
 		$('.btn-customize-pizza button').click( function() {
@@ -275,9 +276,9 @@
 					'size' : selectedPizza[0].pizzaSize,
 					'selectedTopping': selectedTopping,
 					'qty': quantity,
+					'itemTotal': total/quantity,
 					'total': total,
 				}
-				console.log(item);
 				$.ajax({
 					url: url,
 					method: "POST",
@@ -285,8 +286,8 @@
 					success: function (data) {
 						window.location = '/2017296/PizzaNow/cart';
 					},
-					error: function (response) {
-						console.log(response);
+					error: function () {
+						alert('Please try again');
 					}
 				})
 			}
@@ -300,7 +301,6 @@
 			let quantity = $('.quantity_val').val();
 
 			total = (totTopping + totPizza) * parseInt(quantity);
-			console.log(total , parseInt(quantity));
 			$('.total-value').html(total.toFixed(2));
 		}
 	})

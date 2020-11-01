@@ -46,7 +46,7 @@
 						</div>
 						<div class="product-price"><?php echo $total ?></div>
 						<div class="product-quantity">
-							<input class="quantity_val" type="number" id="quantity" value="<?php echo $item->qty ?>"
+							<input class="quantity_val" type="number" onkeydown="return false" id="quantity" value="<?php echo $item->qty ?>"
 								   min="1">
 							<input class="item_id_val" type="hidden" id="id" value="<?php echo $key ?>">
 						</div>
@@ -88,18 +88,6 @@
 					<label>Total</label>
 					<div class="totals-value" id="cart-subtotal"><?php echo $totalAmount ?></div>
 				</div>
-				<!--			<div class="totals-item">-->
-				<!--				<label>Tax (5%)</label>-->
-				<!--				<div class="totals-value" id="cart-tax">3.60</div>-->
-				<!--			</div>-->
-				<!--			<div class="totals-item">-->
-				<!--				<label>Shipping</label>-->
-				<!--				<div class="totals-value" id="cart-shipping">15.00</div>-->
-				<!--			</div>-->
-				<!--			<div class="totals-item totals-item-total">-->
-				<!--				<label>Grand Total</label>-->
-				<!--				<div class="totals-value" id="cart-total">90.57</div>-->
-				<!--			</div>-->
 			</div>
 			<button class="checkout">Checkout</button>
 		</div>
