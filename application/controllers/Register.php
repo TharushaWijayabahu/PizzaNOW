@@ -35,13 +35,21 @@ class Register extends MY_Controller {
 			$id = $this->RegisterModel->insert($data);
 			if ($id>0){
 				$subject = "Please verify email for login";
-				$message = "
-				<p>Hi ".$this->input->post('user_name')."</p>
-				<p>This is email verification mail from PizzaNow  system. For complete registration process
-				and login into system. First you want to verify you email by click 
-				this <a href='".base_url()."register/verify_email/".$verificationKey."'>link</a>.</p><br />
-				<p>Thanks,</p>
-				";
+				$item = array(
+					'isSet' => true,
+					'itemList' => $this->session->userdata('itemList'),
+					'totalAmount' => $this->session->userdata('totalAmount'),
+					'customer' => $this->session->userdata('customer'),
+					'orderStatus' => 'Success'
+				);
+				$message = $message = $this->load->view('order/placeOrder',$item,true);
+//					"
+//				<p>Hi ".$this->input->post('user_name')."</p>
+//				<p>This is email verification mail from PizzaNow  system. For complete registration process
+//				and login into system. First you want to verify you email by click
+//				this <a href='".base_url()."register/verify_email/".$verificationKey."'>link</a>.</p><br />
+//				<p>Thanks,</p>
+//				";
 				$this->load->library('email');
 				$config = array(
 					'protocol' => 'smtp',

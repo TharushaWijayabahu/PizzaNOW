@@ -12,7 +12,6 @@
 				<label class="product-line-price">Total</label>
 			</div>
 			<?php foreach ($itemList as $key => $item) {
-				print_r($key);
 				if ($item->type == 'PIZZA') {
 					$total = $item->price;
 					?>
@@ -21,7 +20,7 @@
 							<img src="<?php echo base_url() . $item->imgUrl ?>">
 						</div>
 						<div class="product-details">
-							<div class="product-title"><?php echo $item->name . ' (' . $item->size . ') - Rs ' .$item->price?>
+							<div class="product-title"><?php echo $item->name . ' (' . $item->size . ') - Rs ' . $item->price ?>
 							</div>
 							<?php
 							if (isset($item->selectedTopping)) { ?>
@@ -36,7 +35,7 @@
 											</ul>
 										</div>
 										<div class="col-6">
-											<p><?php echo 'Rs '. $topping['toppingPrice'] ?></p>
+											<p><?php echo 'Rs ' . $topping['toppingPrice'] ?></p>
 										</div>
 									</div>
 								<?php }
@@ -47,7 +46,8 @@
 						</div>
 						<div class="product-price"><?php echo $total ?></div>
 						<div class="product-quantity">
-							<input class="quantity_val" type="number" onkeydown="return false" id="quantity" value="<?php echo $item->qty ?>"
+							<input class="quantity_val" type="number" onkeydown="return false" id="quantity"
+								   value="<?php echo $item->qty ?>"
 								   min="1">
 							<input class="item_id_val" type="hidden" id="id" value="<?php echo $key ?>">
 						</div>
@@ -66,7 +66,22 @@
 						</div>
 						<div class="product-details">
 							<div class="product-title"><?php echo $item->name ?></div>
-							<p class="product-description"> <?php echo $item->description ?></p>
+							<?php if ($item->type == 'SPECIAL DEAL') {
+								$description = explode(',', $item->description);
+								?>
+								<h5 style="font-size: 15px;">Items</h5>
+								<div class="row" style="font-size: 13px;">
+									<?php foreach ($description as $itemDes) { ?>
+										<div class="col-12">
+											<ul>
+												<li><?php echo $itemDes ?></li>
+											</ul>
+										</div>
+									<?php } ?>
+								</div>
+							<?php } else { ?>
+								<p class="product-description"> <?php echo $item->description ?></p>
+							<?php } ?>
 						</div>
 						<div class="product-price"><?php echo $item->price ?></div>
 						<div class="product-quantity">
@@ -90,7 +105,11 @@
 					<div class="totals-value" id="cart-subtotal"><?php echo $totalAmount ?></div>
 				</div>
 			</div>
-			<button class="checkout">Checkout</button>
+			<a href="<?php echo base_url().'order/checkout';?>"
+					 class="btn btn-success checkout">
+				Checkout
+			</a>
+<!--			<button class="checkout">Checkout</button>-->
 		</div>
 	<?php } else { ?>
 		<div class="container cart-container" id="emptyCartDiv" style="min-height: 250px;">

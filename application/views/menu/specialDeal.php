@@ -9,28 +9,37 @@
 						<div class="row">
 							<div class="col-md-12 col-sm-5 col-xs-5 itemImageContainer">
 								<div class="itemImage">
-									<img src="<?php echo base_url(). $item->sm_img_url; ?>"
+									<img src="<?php echo base_url() . $item->sm_img_url; ?>"
 										 alt="Lunch Time Large Pizza Offer" class="data-gtag-item-image-promo">
 								</div>
 							</div>
 							<div class="col-md-12 col-sm-7 col-xs-7 itemDetailContainer">
 								<div class="row">
 									<div class="col-md-12 text-left">
-										<div class="hidden-sm hidden-xs" style="height:10px;"></div>
-										<h3 style="text-align:left;" class="menu-item-name" title="" data-toggle="tooltip"
-											data-original-title="Lunch Time Large Pizza Offer">Lunch Time Large Pizza Offer
-											<span style="float:right;" class="hidden-sm hidden-xs">
+										<h3 class="menu-special-name"
+											title="<?php echo $item->sm_name ?>"
+											data-toggle="tooltip"
+											data-original-title="Lunch Time Large Pizza Offer">
+											<?php echo $item->sm_name ?>
+											<span class="hidden-sm hidden-xs">
                                    </span>
 										</h3>
-										<p style="text-align:left;" class="menu-item-desc hidden-sm hidden-xs">
-											<?php echo $item->sm_description; ?>
-										</p>
+										<?php $description = explode(',', $item->sm_description); ?>
+										<div class="row">
+											<?php foreach ($description as $row => $desItem) { ?>
+												<div class="col-4">
+													<p class="menu-special-dec hidden-sm hidden-xs">
+														<?php echo $desItem; ?>
+													</p>
+												</div>
+											<?php } ?>
+										</div>
 									</div>
 								</div>
 								<div class="menu-price-container-parent-not">
 									<div class="menu-price-container-parent">
                                     <span class="font-family1">
-								<span style="font-weight:bold; font-size: 20px;"> Rs <?php echo $item->sm_price; ?></span>
+								<span class="menu-special-price"> Rs <?php echo $item->sm_price; ?></span>
 								<div class="btn-customize-mobile">
 									<button class="btn btn-success btn-block"
 											data-type="SPECIAL DEAL"

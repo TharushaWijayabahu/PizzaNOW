@@ -179,6 +179,16 @@ header .cart-items {
 	 padding: 0px 10px 0px 10px;
 	letter-spacing: 0px;
 }
+.menu-special-name{
+	text-align: center;
+	font-size: 23px;
+	margin-top: 5px;
+	margin-bottom: 8px;
+}
+.menu-special-price{
+	font-weight:bold;
+	font-size: 20px;
+}
 .menu-item-desc {
 	margin-bottom: 0px;
 	text-align: left;
@@ -187,6 +197,13 @@ header .cart-items {
 	overflow-x: hidden;
 	overflow-y: hidden;
 	height: 40px;
+	color: #8e8e8e;
+}
+.menu-special-dec{
+	margin-bottom: 0px;
+	text-align: left;
+	overflow: hidden;
+	font-size: 12.4px;
 	color: #8e8e8e;
 }
 .menu-price-container{

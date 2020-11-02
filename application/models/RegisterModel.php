@@ -22,7 +22,6 @@ class RegisterModel extends CI_Model {
 		}else{
 			return false;
 		}
-
 	}
 
 }
