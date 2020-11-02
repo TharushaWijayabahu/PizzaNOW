@@ -42,13 +42,13 @@
 								<span style="font-weight:bold;"> Rs <?php echo $item->beverage_price; ?></span>
 								<div class="btn-customize-mobile">
 									<button class="btn btn-success btn-block"
-											data-side_id="<?php echo $item->beverage_id; ?>"
-											data-side_name="<?php echo $item->beverage_name; ?>"
-											data-side_description="<?php echo $item->beverage_description; ?>"
-											data-side_img_url="<?php echo $item->beverage_img_url; ?>"
-											data-side_price="<?php echo $item->beverage_price; ?>"
-											data-url="<?php echo base_url()."side/addToCart" ?>"
-											data-side_qty=1> Add to cart
+											data-type="DRINK"
+											data-d="<?php echo $item->beverage_id; ?>"
+											data-name="<?php echo $item->beverage_name; ?>"
+											data-description="<?php echo $item->beverage_description; ?>"
+											data-img_url="<?php echo $item->beverage_img_url; ?>"
+											data-price="<?php echo $item->beverage_price; ?>"
+											data-qty=1> Add to cart
 									</button>
 								</div>
 							</div>

@@ -12,6 +12,7 @@
 				<label class="product-line-price">Total</label>
 			</div>
 			<?php foreach ($itemList as $key => $item) {
+				print_r($key);
 				if ($item->type == 'PIZZA') {
 					$total = $item->price;
 					?>

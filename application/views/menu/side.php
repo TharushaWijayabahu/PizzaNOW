@@ -39,13 +39,13 @@
 									<span style="font-weight:bold;"> Rs <?php echo $item->side_price; ?></span>
 									<div class="btn-customize-mobile">
 									<button class="btn btn-success btn-block"
-											data-side_id="<?php echo $item->side_id; ?>"
-											data-side_name="<?php echo $item->side_name; ?>"
-											data-side_description="<?php echo $item->side_description; ?>"
-											data-side_img_url="<?php echo $item->side_img_url; ?>"
-											data-side_price="<?php echo $item->side_price; ?>"
-											data-url="<?php echo base_url()."side/addToCart" ?>"
-											data-side_qty=1> Add to cart
+											data-type="SIDE"
+											data-id="<?php echo $item->side_id; ?>"
+											data-name="<?php echo $item->side_name; ?>"
+											data-description="<?php echo $item->side_description; ?>"
+											data-img_url="<?php echo $item->side_img_url; ?>"
+											data-price="<?php echo $item->side_price; ?>"
+											data-qty=1> Add to cart
 									</button>
 									</div>
 								</div>

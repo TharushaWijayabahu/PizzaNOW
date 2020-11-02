@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Menu extends MY_Controller {
 
@@ -8,7 +8,7 @@ class Menu extends MY_Controller {
 		$this->load->model('MenuModel');
 	}
 
-	public function index(){
+	public function index() {
 		if ($this->session->has_userdata('itemList')) {
 			$data = array(
 				'isSet' => true,
@@ -25,7 +25,7 @@ class Menu extends MY_Controller {
 		$this->render('menu/home', $data);
 	}
 
-	public function Pizza(){
+	public function Pizza() {
 		if ($this->session->has_userdata('itemList')) {
 			$data = array(
 				'isSet' => true,
@@ -42,12 +42,12 @@ class Menu extends MY_Controller {
 		$this->render('menu/pizza/pizza', $data);
 	}
 
-	public function pizzaCustomize(){
-		if($this->uri->segment(3)){
+	public function pizzaCustomize() {
+		if ($this->uri->segment(3)) {
 			$pizzaId = $this->uri->segment(3);
 			$item["pizzaItem"] = $this->MenuModel->getPizzaItemById($pizzaId);
 
-			if(isset($item)){
+			if (isset($item)) {
 				$topping["topping"] = $this->MenuModel->getAllTopping();
 				$data = array(
 					'pizzaItem' => $item,
@@ -58,7 +58,8 @@ class Menu extends MY_Controller {
 			}
 		}
 	}
-	public function drink(){
+
+	public function drink() {
 		if ($this->session->has_userdata('itemList')) {
 			$data = array(
 				'isSet' => true,
@@ -75,7 +76,7 @@ class Menu extends MY_Controller {
 		$this->render('menu/drink', $data);
 	}
 
-	public function side(){
+	public function side() {
 		if ($this->session->has_userdata('itemList')) {
 			$data = array(
 				'isSet' => true,
@@ -93,22 +94,22 @@ class Menu extends MY_Controller {
 		$this->render('menu/side', $data);
 	}
 
-	public function specialDeal(){
+	public function specialDeal() {
 
-	if ($this->session->has_userdata('itemList')) {
-		$data = array(
-			'isSet' => true,
-			'itemList' => $this->session->userdata('itemList'),
-			'totalAmount' => $this->session->userdata('totalAmount')
-		);
-	} else {
-		$data = array(
-			'isSet' => false,
-			'itemList' => null
-		);
-	}
+		if ($this->session->has_userdata('itemList')) {
+			$data = array(
+				'isSet' => true,
+				'itemList' => $this->session->userdata('itemList'),
+				'totalAmount' => $this->session->userdata('totalAmount')
+			);
+		} else {
+			$data = array(
+				'isSet' => false,
+				'itemList' => null
+			);
+		}
 
-//		$data['sideItem'] = $this->MenuModel->getAllSide();
+		$data['specialItem'] = $this->MenuModel->getAllSpecialMeal();
 		$this->render('menu/specialDeal', $data);
 	}
 

@@ -41,7 +41,9 @@ $(document).ready(function() {
 		$.ajax({
 			url: url,
 			method: "POST",
-			data: id,
+			data: {
+				'id' : id
+			},
 			success: function() {
 				location.reload();
 			},
@@ -56,13 +58,13 @@ $(document).ready(function() {
 
 		let url = "http://localhost/2017296/PizzaNow/cart/addToCart";
 		let item = {
-			'type' : 'SIDE',
-			'id' :$(this).data("side_id"),
-			'name' :$(this).data("side_name"),
-			'description' :$(this).data("side_description"),
-			'imgUrl' :$(this).data("side_img_url"),
-			'price' :$(this).data("side_price"),
-			'qty' :$(this).data("side_qty"),
+			'type' : $(this).data("type"),
+			'id' :$(this).data("id"),
+			'name' :$(this).data("name"),
+			'description' :$(this).data("description"),
+			'imgUrl' :$(this).data("img_url"),
+			'price' :$(this).data("price"),
+			'qty' :$(this).data("qty"),
 		}
 		$.ajax({
 			url: url,

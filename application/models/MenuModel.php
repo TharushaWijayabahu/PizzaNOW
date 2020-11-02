@@ -40,5 +40,10 @@ class MenuModel extends CI_Model {
 		$query = $this->db->get("side");
 		return $query->result();
 	}
+	public function getAllSpecialMeal(){
+		$this->db->where("sm_availability", "yes");
+		$query = $this->db->get("special_meal");
+		return $query->result();
+	}
 
 }

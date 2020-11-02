@@ -93,6 +93,7 @@ class Cart extends MY_Controller {
 		$id = $this->input->post('id');
 		$itemList = $this->session->userdata('itemList');
 		$totalAmount = $this->session->userdata('totalAmount');
+
 		foreach ($itemList as $row => $row_value) {
 			if ($row == $id) {
 				array_splice($itemList, $row, 1);
@@ -107,7 +108,6 @@ class Cart extends MY_Controller {
 						'totalAmount' => 0
 					);
 					$this->session->set_userdata($data);
-
 				}
 				break;
 			}
