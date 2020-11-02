@@ -1,7 +1,7 @@
 <?php
+defined('BASEPATH') or exit('No direct script access allowed');
 
-
-class PizzaModel extends CI_Model {
+class MenuModel extends CI_Model {
 
 	public function getAllPizzaItem(){
 		$this->db->where("pizza_availability", "yes");
@@ -29,4 +29,16 @@ class PizzaModel extends CI_Model {
 		}
 
 	}
+	public function getAllDrink(){
+		$this->db->where("beverage_availability", "yes");
+		$query = $this->db->get("beverage");
+		return $query->result();
+	}
+
+	public function getAllSide(){
+		$this->db->where("side_availability", "yes");
+		$query = $this->db->get("side");
+		return $query->result();
+	}
+
 }

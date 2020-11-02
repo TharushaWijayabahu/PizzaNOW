@@ -7,7 +7,6 @@
 				<div class="box">
 					<div class="row">
 						<div class="col-md-12 col-sm-5 col-xs-5 itemImageContainer">
-							<!--					<div class="col-xs-12 col-sm-6 col-md-4 itemImageContainer">-->
 							<div class="itemImage">
 								<a href="#">
 									<img
@@ -37,7 +36,6 @@
 							<div class="menu-price-container-parent-not">
 								<div class="menu-price-container-parent">
                                     <span class="font-family1">
-                                        <span"> Starting from </span>
 									<span style="font-weight:bold;"> Rs <?php echo $item->side_price; ?></span>
 									<div class="btn-customize-mobile">
 									<button class="btn btn-success btn-block"

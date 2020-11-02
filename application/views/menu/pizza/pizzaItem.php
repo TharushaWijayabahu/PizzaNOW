@@ -172,7 +172,8 @@
 					<div class="row">
 						<div class="pizza-quantity col-lg-4 col-md-8 col-sm-8 col-xs-12 mx-auto">
 							<input class="quantity_val text-center"
-								   style="height: 38px;margin-top: 7px; float: left; width: 50px;"
+								   style="width: 100%; font-size: 13px; border-radius: 3px;
+								   margin-top: 17px; padding: 7px; border-color: #28a745;"
 								   type="number" id="quantity" value=1 min="1">
 						</div>
 						<div class="btn-customize-pizza col-lg-8 col-md-8 col-sm-4 col-xs-12 mx-auto">
