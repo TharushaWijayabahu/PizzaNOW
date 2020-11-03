@@ -9,7 +9,7 @@ $(document).ready(function() {
 	$('.product-quantity input').change( function() {
 		let quantity = $(this).closest('.product-quantity').find('.quantity_val').val();
 		let id = $(this).closest('.product-quantity').find('.item_id_val').val();
-		let url = "http://localhost/2017296/PizzaNow/cart/addQuantity"
+		let url = "http://localhost/2017296/PizzaNow/index.php/cart/addQuantity"
 
 		$('input[type="number"]').keydown(function (e) {
 			e.preventDefault();
@@ -37,7 +37,7 @@ $(document).ready(function() {
 
 	$('.product-removal button').click( function() {
 		let id = $(this).data("id");
-		let url = "http://localhost/2017296/PizzaNow/cart/removeItem"
+		let url = "http://localhost/2017296/PizzaNow/index.php/cart/removeItem"
 		$.ajax({
 			url: url,
 			method: "POST",
@@ -56,7 +56,7 @@ $(document).ready(function() {
 
 	$('.btn-customize-mobile button').click( function() {
 
-		let url = "http://localhost/2017296/PizzaNow/cart/addToCart";
+		let url = "http://localhost/2017296/PizzaNow/index.php/cart/addToCart";
 		let item = {
 			'type' : $(this).data("type"),
 			'id' :$(this).data("id"),
@@ -71,7 +71,7 @@ $(document).ready(function() {
 			method: "POST",
 			data: item,
 			success: function() {
-				window.location = '/2017296/PizzaNow/cart';
+				window.location = '/2017296/PizzaNow/index.php/cart';
 			},
 			error: function() {
 				alert('please try again');

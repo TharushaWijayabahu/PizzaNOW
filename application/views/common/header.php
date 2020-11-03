@@ -23,7 +23,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<header>
 			<nav class="navbar navbar-expand-lg navbar-light shadow-sm bg-light fixed-top">
 				<div class="container body-container">
-					<a class="navbar-brand d-flex align-items-center" href="<?php echo base_url(); ?>menu">
+					<a class="navbar-brand d-flex align-items-center" href="<?php echo base_url(); ?>index.php/menu">
 						<svg width="40px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
 							 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512"
 							 style="enable-background:new 0 0 512 512;" xml:space="preserve">
@@ -37,22 +37,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<div class="collapse navbar-collapse" id="navbar4">
 						<ul class="navbar-nav mr-auto pl-lg-4">
 							<li class="nav-item px-lg-2 active"><a class="nav-link"
-																   href="<?php echo base_url(); ?>menu/pizza">
+																   href="<?php echo base_url(); ?>index.php/menu/pizza">
 									<span class="d-inline-block d-lg-none icon-width">
 										<i class="fas fa-pizza-slice"></i></span>PIZZA</a>
 							</li>
 							<li class="nav-item px-lg-2"><a class="nav-link"
-															href="<?php echo base_url(); ?>menu/side">
+															href="<?php echo base_url(); ?>index.php/menu/side">
 									<span class="d-inline-block d-lg-none icon-width">
 										<i class="fa fa-cutlery" aria-hidden="true"></i></span>SIDES</a>
 							</li>
 							<li class="nav-item px-lg-2"><a class="nav-link"
-															href="<?php echo base_url(); ?>menu/specialDeal"">
+															href="<?php echo base_url(); ?>index.php/menu/specialDeal"">
 									<span class="d-inline-block d-lg-none icon-width">
 										<i class="fa fa-cutlery" aria-hidden="true"></i></span>SPECIAL DEALS</a></li>
 
 							<li class="nav-item px-lg-2"><a class="nav-link"
-															href="<?php echo base_url(); ?>menu/drink">
+															href="<?php echo base_url(); ?>index.php/menu/drink">
 									<span class="d-inline-block d-lg-none icon-width">
 										<i class="fa fa-glass" aria-hidden="true"></i></span>DRINKS</a></li>
 						</ul>
@@ -62,7 +62,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							<ul class="nav-account d-flex">
 								<li>
 								<?php if (isset($itemList)) { ?>
-									<a href="<?php echo base_url(); ?>cart" class="round-icon-btn text-left cart-nav"
+									<a href="<?php echo base_url(); ?>index.php/cart" class="round-icon-btn text-left cart-nav"
 									   title=""
 									   data-toggle="tooltip" data-placement="left" data-original-title="Your Basket">
 										<i class="fa fa-shopping-basket" aria-hidden="true"></i>
@@ -70,7 +70,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 											   style="background-color: rgb(255, 0, 0);"><?php echo count($itemList);?></label>
 									</a>
 								<?php }else{ ?>
-									<a href="<?php echo base_url(); ?>cart" class="round-icon-btn text-left cart-nav"
+									<a href="<?php echo base_url(); ?>index.php/cart" class="round-icon-btn text-left cart-nav"
 									   title=""
 									   data-toggle="tooltip" data-placement="left" data-original-title="Your Basket">
 										<i class="fa fa-shopping-basket" aria-hidden="true"></i>
@@ -79,7 +79,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 									<?php } ?>
 								</li>
 								<li>
-									<a href="<?php echo base_url(); ?>register" class="round-icon-btn shared-04"
+									<a href="<?php echo base_url(); ?>index.php/register" class="round-icon-btn shared-04"
 									   data-toggle="tooltip" title="" data-placement="left"
 									   data-original-title="My Account">
 										<i class="fa fa-user-circle-o" aria-hidden="true"></i>

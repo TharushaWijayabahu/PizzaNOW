@@ -24,10 +24,10 @@ class Login extends MY_Controller {
 			$this->input->post('user_password'));
 			print_r($result);
 			if($result == ''){
-				redirect('cart');
+				redirect('index.php/cart');
 			}else{
 				$this->session->set_flashdata('message', $result);
-				redirect('login');
+				redirect('index.php/login');
 			}
 		}else{
 			$this->index();

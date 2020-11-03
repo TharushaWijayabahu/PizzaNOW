@@ -40,7 +40,7 @@ class Order extends MY_Controller {
 					'totalAmount' => $totalAmount,
 					'customer' => $customer
 				);
-				redirect('order/confirmOrder',$data);
+				redirect('index.php/order/confirmOrder',$data);
 			}else{
 				$data = array(
 					'isSet' => true,
@@ -50,7 +50,7 @@ class Order extends MY_Controller {
 				$this->render('order/checkout', $data);
 			}
 		} else {
-			redirect('cart');
+			redirect('index.php/cart');
 		}
 	}
 
@@ -58,7 +58,7 @@ class Order extends MY_Controller {
 		$this->form_validation->set_rules('first_name', 'First name', 'required|trim');
 		$this->form_validation->set_rules('last_name', 'Last name', 'required|trim');
 		$this->form_validation->set_rules('email', 'Email Address',
-			'required|trim|valid_email|is_unique[customer.customer_email]');
+			'required|trim|valid_email');
 		$this->form_validation->set_rules('address', 'Address', 'required|trim');
 		$this->form_validation->set_rules('number', 'Mobile Number',
 			'required|exact_length[10]');
@@ -74,7 +74,8 @@ class Order extends MY_Controller {
 				'isSet' => true,
 				'itemList' => $this->session->userdata('itemList'),
 				'totalAmount' => $this->session->userdata('totalAmount'),
-				'customer' => $customer
+				'customer' => $customer,
+				'orderStatus' => 'Pending'
 			);
 			$this->render('order/confirmOrder',$data);
 		} else {
@@ -104,10 +105,10 @@ class Order extends MY_Controller {
 //				$this->sendEmail();
 				$this->render('order/confirmOrder',$data);
 			}else{
-				redirect('cart/cart',$data);
+				redirect('index.php/cart/cart',$data);
 			}
 		}else{
-			redirect('cart');
+			redirect('index.php/cart');
 		}
 	}
 
@@ -121,8 +122,8 @@ class Order extends MY_Controller {
 			'customer_address' => $customer->address,
 			'customer_mobile' => $customer->number,
 		);
-//		print_r($itemList);
-		$cId = $this->OrderModel->addCustomer($customerEntity);
+		$cId = 1;
+//			$this->OrderModel->addCustomer($customerEntity);
 			if($cId> 0){
 				$orderEntity = array(
 					'customer_id' => $cId,
@@ -132,14 +133,89 @@ class Order extends MY_Controller {
 					'delivery_time' => date('H:i:s', strtotime('+30 minutes')),
 					'order_status' => 'Success'
 				);
-				$oId = $this->OrderModel->addOrder($orderEntity);
+				$oId = 1;
+//					$this->OrderModel->addOrder($orderEntity);
 				if($oId>0){
-					print_r('customer Id '.$cId);
-					print_r('Order Id '.$oId);
+					$pizzaToppingEntity = array();
+					$pizzaEntity = array();
+					$sideEntity = array();
+					$drinkEntity = array();
+					$smEntity = array();
+					foreach ($itemList as $row => $item){
+//						print_r($item);
+						if($item->type == 'PIZZA'){
+							if(count($item->selectedTopping)>0){
+								foreach ($item->selectedTopping as $topping){
+									$pizzaToppingEntity[] = array(
+										'order_id' => $oId,
+										'pizza_id' => $item->id,
+										'topping_id' => $topping['toppingId'],
+										'quantity' => $item->qty,
+										'total' => $item->total
+									);
+								}
+							}else{
+								$pizzaEntity[] = array(
+									'order_id' => $oId,
+									'pizza_id' => $item->id,
+									'quantity' => $item->qty,
+									'total' => $item->total
+								);
+							}
+						}elseif ($item->type == 'SIDE'){
+							$sideEntity[] = array(
+								'order_id' => $oId,
+								'side_id' => $item->id,
+								'quantity' => $item->qty,
+								'total' => $item->total
+							);
+
+						}elseif ($item->type == 'DRINK'){
+							$drinkEntity[] = array(
+								'order_id' => $oId,
+								'beverage_id' => $item->id,
+								'quantity' => $item->qty,
+								'total' => $item->total
+							);
+
+						}else{
+							$smEntity[] = array(
+								'order_id' => $oId,
+								'sm_id' => $item->id,
+								'quantity' => $item->qty,
+								'total' => $item->total
+							);
+
+						}
+					}
+
+					$this->addOrderToDB($pizzaToppingEntity, $pizzaEntity, $sideEntity, $drinkEntity, $smEntity);
 				}
-//				print_r($cId);
 			}
 
+	}
+	public function addOrderToDB($pizzaToppingEntity, $pizzaEntity, $sideEntity, $drinkEntity, $smEntity){
+		if(count($pizzaToppingEntity) > 0){
+			$id = $this->OrderModel->addPizzaTopping($pizzaToppingEntity);
+			print_r('addPizzaTopping '. $id);
+		}
+		if(count($pizzaEntity) > 0){
+			$id = $this->OrderModel->addPizza($pizzaEntity);
+			print_r('addPizza '. $id);
+		}
+		if(count($sideEntity) > 0){
+			$id = $this->OrderModel->addSide($sideEntity);
+			print_r('addSide '. $id);
+		}
+		if(count($drinkEntity) > 0){
+			$id = $this->OrderModel->addDrink($drinkEntity);
+			print_r('addDrink '. $id);
+		}
+		if(count($smEntity) > 0){
+			$id = $this->OrderModel->addSM($smEntity);
+			print_r('addSM '. $id);
+		}
+		return true;
 	}
 
 	public function sendEmailReceipt(){
@@ -175,7 +251,7 @@ class Order extends MY_Controller {
 		if($this->email->send()){
 			$this->session->set_flashdata('message',
 				'Check in your email for email verification mail');
-			redirect('register');
+			redirect('index.php/register');
 		}
 	}
 }

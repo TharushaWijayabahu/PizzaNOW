@@ -52,11 +52,12 @@
 									<?php } else {
 										?>
 										<td class="left"><?php echo $item->description; ?></td>
-									<?php }
-								} else { ?>
+									<?php } ?>
+									<td class="right">Rs <?php echo $item->itemTotal; ?></td>
+								<?php } else { ?>
 									<td class="left"><?php echo $item->description; ?></td>
+									<td class="right">Rs <?php echo $item->price; ?></td>
 								<?php } ?>
-								<td class="right">Rs <?php echo $item->price; ?></td>
 								<td class="center"><?php echo $item->qty; ?></td>
 								<td class="right">Rs <?php echo $item->total; ?></td>
 							</tr>
@@ -82,7 +83,7 @@
 					</table>
 				</div>
 			</div>
-			<a href="<?php echo base_url().'order/placeOrder';?>"
+			<a href="<?php echo base_url().'index.php/order/placeOrder';?>"
 			   class="btn btn-success checkout">
 				Place order
 			</a>

@@ -38,7 +38,7 @@
                                     <span class="font-family1">
                                         <span"> Starting from </span>
 									<span style="font-weight:bold;"> Rs <?php echo $item->pizza_s_price;?></span>
-									<a href="<?php echo base_url().'menu/pizzaCustomize/'. $item->pizza_id;?>"
+									<a href="<?php echo base_url().'index.php/menu/pizzaCustomize/'. $item->pizza_id;?>"
 									   class="btn btn-success btn-customize-mobile data-gtag-customize">
 										Customize
 									</a>

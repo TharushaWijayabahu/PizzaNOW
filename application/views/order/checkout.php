@@ -3,7 +3,7 @@
 		<h3 class="mb-0">User Information</h3>
 	</div>
 	<div class="card-body">
-		<form method="post" action="<?php echo base_url(); ?>order/validation" >
+		<form method="post" action="<?php echo base_url(); ?>index.php/order/validation" >
 			<div class="form-group row">
 				<label class="col-lg-3 col-form-label form-control-label">First name</label>
 				<div class="col-lg-9">

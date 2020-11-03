@@ -265,7 +265,7 @@
 				alert('Please select pizza size');
 			} else {
 				let quantity = $('.quantity_val').val();
-				let url = "http://localhost/2017296/PizzaNow/cart/addToCart"
+				let url = "http://localhost/2017296/PizzaNow/index.php/cart/addToCart"
 
 				let item = {
 					'type' : 'PIZZA',
@@ -285,7 +285,7 @@
 					method: "POST",
 					data: item,
 					success: function (data) {
-						window.location = '/2017296/PizzaNow/cart';
+						window.location = '/2017296/PizzaNow/index.php/cart';
 					},
 					error: function () {
 						alert('Please try again');

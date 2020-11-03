@@ -105,7 +105,7 @@
 					<div class="totals-value" id="cart-subtotal"><?php echo $totalAmount ?></div>
 				</div>
 			</div>
-			<a href="<?php echo base_url().'order/checkout';?>"
+			<a href="<?php echo base_url().'index.php/order/checkout';?>"
 					 class="btn btn-success checkout">
 				Checkout
 			</a>
