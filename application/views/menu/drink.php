@@ -43,7 +43,7 @@
 								<div class="btn-customize-mobile">
 									<button class="btn btn-success btn-block"
 											data-type="DRINK"
-											data-d="<?php echo $item->beverage_id; ?>"
+											data-id="<?php echo $item->beverage_id; ?>"
 											data-name="<?php echo $item->beverage_name; ?>"
 											data-description="<?php echo $item->beverage_description; ?>"
 											data-img_url="<?php echo $item->beverage_img_url; ?>"

@@ -113,6 +113,14 @@
 		</div>
 	<?php } else { ?>
 		<div class="container cart-container" id="emptyCartDiv" style="min-height: 250px;">
+			<?php
+			if ($this->session->flashdata('message')) { ?>
+				<div class="alert alert-success text-center">
+					<?php echo $this->session->flashdata("message") ?>
+				</div>
+
+			<?php }
+			?>
 			<p class="text-center">No items</p>
 		</div>
 	<?php } ?>

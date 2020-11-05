@@ -7,6 +7,14 @@
 
 		</div>
 		<div class="card-body">
+			<?php
+			if ($this->session->flashdata('message')) { ?>
+				<div class="alert alert-danger text-center">
+					<?php echo $this->session->flashdata("message") ?>
+				</div>
+
+			<?php }
+			?>
 			<div class="row mb-4">
 				<div class="col-sm-6">
 					<h6 class="mb-3">Customer details</h6>
@@ -43,11 +51,11 @@
 									if (isset($item->selectedTopping)) { ?>
 										<td class="left">
 											<p style="font-size: 16px; font-weight: bold;">Toppings</p>
-										<?php foreach ($item->selectedTopping as $topping) {
-											?>
-											<?php echo $topping['toppingName'] . ' - Rs ' . $topping['toppingPrice']; ?>
-											<br/>
-										<?php } ?>
+											<?php foreach ($item->selectedTopping as $topping) {
+												?>
+												<?php echo $topping['toppingName'] . ' - Rs ' . $topping['toppingPrice']; ?>
+												<br/>
+											<?php } ?>
 										</td>
 									<?php } else {
 										?>
@@ -83,7 +91,7 @@
 					</table>
 				</div>
 			</div>
-			<a href="<?php echo base_url().'index.php/order/placeOrder';?>"
+			<a href="<?php echo base_url() . 'index.php/order/placeOrder'; ?>"
 			   class="btn btn-success checkout">
 				Place order
 			</a>

@@ -33,15 +33,15 @@ class Order extends MY_Controller {
 		$totalAmount = $this->session->userdata('totalAmount');
 
 		if (isset($itemList)) {
-			if(isset($customer)){
+			if (isset($customer)) {
 				$data = array(
 					'isSet' => true,
 					'itemList' => $itemList,
 					'totalAmount' => $totalAmount,
 					'customer' => $customer
 				);
-				redirect('index.php/order/confirmOrder',$data);
-			}else{
+				redirect('index.php/order/confirmOrder', $data);
+			} else {
 				$data = array(
 					'isSet' => true,
 					'itemList' => $itemList,
@@ -55,36 +55,48 @@ class Order extends MY_Controller {
 	}
 
 	public function validation() {
-		$this->form_validation->set_rules('first_name', 'First name', 'required|trim');
-		$this->form_validation->set_rules('last_name', 'Last name', 'required|trim');
-		$this->form_validation->set_rules('email', 'Email Address',
-			'required|trim|valid_email');
-		$this->form_validation->set_rules('address', 'Address', 'required|trim');
-		$this->form_validation->set_rules('number', 'Mobile Number',
-			'required|exact_length[10]');
-
-		if ($this->form_validation->run()) {
-			$customer = new stdClass;
-			$customer->name = $this->input->post('first_name') . ' ' . $this->input->post('last_name');
-			$customer->email = $this->input->post('email');
-			$customer->address = $this->input->post('address');
-			$customer->number = $this->input->post('number');
-			$this->session->set_userdata('customer', $customer);
+		$existCustomer = $this->session->userdata('customer');
+		if (isset($existCustomer)) {
 			$data = array(
 				'isSet' => true,
 				'itemList' => $this->session->userdata('itemList'),
 				'totalAmount' => $this->session->userdata('totalAmount'),
-				'customer' => $customer,
+				'customer' => $existCustomer,
 				'orderStatus' => 'Pending'
 			);
-			$this->render('order/confirmOrder',$data);
+			redirect('order/confirmOrder', $data);
 		} else {
-			$data = array(
-				'isSet' => true,
-				'itemList' => $this->session->userdata('itemList'),
-				'totalAmount' => $this->session->userdata('totalAmount'),
-			);
-			$this->render('order/checkout', $data);
+			$this->form_validation->set_rules('first_name', 'First name', 'required|trim');
+			$this->form_validation->set_rules('last_name', 'Last name', 'required|trim');
+			$this->form_validation->set_rules('email', 'Email Address',
+				'required|trim|valid_email');
+			$this->form_validation->set_rules('address', 'Address', 'required|trim');
+			$this->form_validation->set_rules('number', 'Mobile Number',
+				'required|exact_length[10]');
+
+			if ($this->form_validation->run()) {
+				$customer = new stdClass;
+				$customer->name = $this->input->post('first_name') . ' ' . $this->input->post('last_name');
+				$customer->email = $this->input->post('email');
+				$customer->address = $this->input->post('address');
+				$customer->number = $this->input->post('number');
+				$this->session->set_userdata('customer', $customer);
+				$data = array(
+					'isSet' => true,
+					'itemList' => $this->session->userdata('itemList'),
+					'totalAmount' => $this->session->userdata('totalAmount'),
+					'customer' => $customer,
+					'orderStatus' => 'Pending'
+				);
+				$this->render('order/confirmOrder', $data);
+			} else {
+				$data = array(
+					'isSet' => true,
+					'itemList' => $this->session->userdata('itemList'),
+					'totalAmount' => $this->session->userdata('totalAmount'),
+				);
+				$this->render('order/checkout', $data);
+			}
 		}
 	}
 
@@ -93,26 +105,26 @@ class Order extends MY_Controller {
 		$itemList = $this->session->userdata('itemList');
 		$totalAmount = $this->session->userdata('totalAmount');
 
-		if(isset($customer)){
+		if (isset($customer)) {
 			$data = array(
-				'isSet' =>true,
+				'isSet' => true,
 				'itemList' => $itemList,
 				'totalAmount' => $totalAmount,
 				'customer' => $customer,
 				'orderStatus' => 'Pending'
 			);
-			if(isset($itemList)){
+			if (isset($itemList)) {
 //				$this->sendEmail();
-				$this->render('order/confirmOrder',$data);
-			}else{
-				redirect('index.php/cart/cart',$data);
+				$this->render('order/confirmOrder', $data);
+			} else {
+				redirect('index.php/cart/cart', $data);
 			}
-		}else{
+		} else {
 			redirect('index.php/cart');
 		}
 	}
 
-	public function placeOrder(){
+	public function placeOrder() {
 		$customer = $this->session->userdata('customer');
 		$itemList = $this->session->userdata('itemList');
 		$total = $this->session->userdata('totalAmount');
@@ -122,30 +134,37 @@ class Order extends MY_Controller {
 			'customer_address' => $customer->address,
 			'customer_mobile' => $customer->number,
 		);
-		$cId = 1;
-//			$this->OrderModel->addCustomer($customerEntity);
-			if($cId> 0){
-				$orderEntity = array(
-					'customer_id' => $cId,
-					'order_price' => $total,
-					'order_delivery_address' => $customer->address,
-					'order_date' => date('Y-m-d H:i:s'),
-					'delivery_time' => date('H:i:s', strtotime('+30 minutes')),
-					'order_status' => 'Success'
-				);
-				$oId = 1;
-//					$this->OrderModel->addOrder($orderEntity);
-				if($oId>0){
-					$pizzaToppingEntity = array();
-					$pizzaEntity = array();
-					$sideEntity = array();
-					$drinkEntity = array();
-					$smEntity = array();
-					foreach ($itemList as $row => $item){
-//						print_r($item);
-						if($item->type == 'PIZZA'){
-							if(count($item->selectedTopping)>0){
-								foreach ($item->selectedTopping as $topping){
+		if(!isset($itemList)){
+			redirect('index.php/cart');
+		}
+		if(!isset($customer->id)){
+			$cId = $this->OrderModel->addCustomer($customerEntity);
+			$customer->id = $cId;
+			$this->session->set_userdata('customer', $customer);
+		}else{
+			$cId = $customer->id;
+		}
+		if ($cId > 0) {
+			$orderEntity = array(
+				'customer_id' => $cId,
+				'order_price' => $total,
+				'order_delivery_address' => $customer->address,
+				'order_date' => date('Y-m-d H:i:s'),
+				'delivery_time' => date('H:i:s', strtotime('+30 minutes')),
+				'order_status' => 'Pending'
+			);
+			$oId = $this->OrderModel->addOrder($orderEntity);
+			if ($oId > 0) {
+				$pizzaToppingEntity = array();
+				$pizzaEntity = array();
+				$sideEntity = array();
+				$drinkEntity = array();
+				$smEntity = array();
+				foreach ($itemList as $row => $item) {
+					switch ($item->type){
+						case 'PIZZA':
+							if (count($item->selectedTopping) > 0) {
+								foreach ($item->selectedTopping as $topping) {
 									$pizzaToppingEntity[] = array(
 										'order_id' => $oId,
 										'pizza_id' => $item->id,
@@ -154,7 +173,7 @@ class Order extends MY_Controller {
 										'total' => $item->total
 									);
 								}
-							}else{
+							} else {
 								$pizzaEntity[] = array(
 									'order_id' => $oId,
 									'pizza_id' => $item->id,
@@ -162,63 +181,92 @@ class Order extends MY_Controller {
 									'total' => $item->total
 								);
 							}
-						}elseif ($item->type == 'SIDE'){
+							break;
+						case 'SIDE':
 							$sideEntity[] = array(
 								'order_id' => $oId,
 								'side_id' => $item->id,
 								'quantity' => $item->qty,
 								'total' => $item->total
 							);
-
-						}elseif ($item->type == 'DRINK'){
+							break;
+						case 'DRINK':
 							$drinkEntity[] = array(
 								'order_id' => $oId,
 								'beverage_id' => $item->id,
 								'quantity' => $item->qty,
 								'total' => $item->total
 							);
-
-						}else{
+							break;
+						default:
 							$smEntity[] = array(
 								'order_id' => $oId,
 								'sm_id' => $item->id,
 								'quantity' => $item->qty,
 								'total' => $item->total
 							);
-
-						}
 					}
-
-					$this->addOrderToDB($pizzaToppingEntity, $pizzaEntity, $sideEntity, $drinkEntity, $smEntity);
 				}
+
+				if ($this->addOrderToDB($pizzaToppingEntity, $pizzaEntity, $sideEntity, $drinkEntity, $smEntity)) {
+					$this->clearOrder();
+					$this->session->set_flashdata('message',
+						'Your order has been successfully placed.Order will be delivered within 30 minutes 
+						( ' . date('H:i') . ' - ' . date('H:i', strtotime('+30 minutes')) . ' )');
+					redirect('index.php/cart');
+				} else {
+					$this->session->set_flashdata('message',
+						'Please try again');
+					redirect('index.php/order/confirmOrder');
+				}
+
 			}
-
+		}
 	}
-	public function addOrderToDB($pizzaToppingEntity, $pizzaEntity, $sideEntity, $drinkEntity, $smEntity){
-		if(count($pizzaToppingEntity) > 0){
+
+	public function addOrderToDB($pizzaToppingEntity, $pizzaEntity, $sideEntity, $drinkEntity, $smEntity) {
+		$result = false;
+		if (count($pizzaToppingEntity) > 0) {
 			$id = $this->OrderModel->addPizzaTopping($pizzaToppingEntity);
-			print_r('addPizzaTopping '. $id);
+			if($id>0){
+				$result = true;
+			}
 		}
-		if(count($pizzaEntity) > 0){
+		if (count($pizzaEntity) > 0) {
 			$id = $this->OrderModel->addPizza($pizzaEntity);
-			print_r('addPizza '. $id);
+			if($id>0){
+				$result = true;
+			}
 		}
-		if(count($sideEntity) > 0){
+		if (count($sideEntity) > 0) {
 			$id = $this->OrderModel->addSide($sideEntity);
-			print_r('addSide '. $id);
+			if($id>0){
+				$result = true;
+			}
 		}
-		if(count($drinkEntity) > 0){
+		if (count($drinkEntity) > 0) {
 			$id = $this->OrderModel->addDrink($drinkEntity);
-			print_r('addDrink '. $id);
+			if($id>0){
+				$result = true;
+			}
 		}
-		if(count($smEntity) > 0){
+		if (count($smEntity) > 0) {
 			$id = $this->OrderModel->addSM($smEntity);
-			print_r('addSM '. $id);
+			if($id>0){
+				$result = true;
+			}
 		}
-		return true;
+		return $result;
 	}
 
-	public function sendEmailReceipt(){
+	public function clearOrder() {
+		$this->session->unset_userdata('itemList');
+		$this->session->unset_userdata('totalAmount');
+		$this->session->unset_userdata('orderStatus');
+		print_r($this->session->userdata());
+	}
+
+	public function sendEmailReceipt() {
 		$subject = "Pizza Now Order";
 		$customer = $this->session->userdata('customer');
 		$item = array(
@@ -227,7 +275,7 @@ class Order extends MY_Controller {
 			'customer' => $customer,
 			'orderStatus' => 'Success'
 		);
-		$message = $message = $this->load->view('order/placeOrder',$item,true);
+		$message = $message = $this->load->view('order/placeOrder', $item, true);
 		$this->load->library('email');
 		$config = array(
 			'protocol' => 'smtp',
@@ -239,7 +287,7 @@ class Order extends MY_Controller {
 			'mailtype' => 'html',
 			'charset' => 'iso-8859-1',
 			'newline' => "\r\n",
-			'smtp_crypto'   => 'ssl',
+			'smtp_crypto' => 'ssl',
 			'wordwrap' => TRUE
 		);
 		$this->email->initialize($config);
@@ -248,7 +296,7 @@ class Order extends MY_Controller {
 		$this->email->set_newline("\r\n");
 		$this->email->subject($subject);
 		$this->email->message($message);
-		if($this->email->send()){
+		if ($this->email->send()) {
 			$this->session->set_flashdata('message',
 				'Check in your email for email verification mail');
 			redirect('index.php/register');

@@ -10,7 +10,7 @@
 					<input class="form-control"
 						   type="text" name="first_name"
 						   value="<?php echo set_value('first_name'); ?>"/>
-					<span class ="text-danger">
+					<span class="text-danger">
 					<?php echo form_error('first_name'); ?>
 					</span>
 				</div>
@@ -21,7 +21,7 @@
 					<input class="form-control"
 						   type="text" type="text" name="last_name"
 						   value="<?php echo set_value('last_name'); ?>"/>
-					<span class ="text-danger">
+					<span class="text-danger">
 					<?php echo form_error('last_name'); ?>
 					</span>
 				</div>
@@ -32,7 +32,7 @@
 					<input class="form-control"
 						   type="email" name="email"
 						   value="<?php echo set_value('email'); ?>"/>
-					<span class ="text-danger">
+					<span class="text-danger">
 					<?php echo form_error('email'); ?>
 					</span>
 				</div>
@@ -44,7 +44,7 @@
 					<input class="form-control"
 						   type="text" name="address"
 						   value="<?php echo set_value('address'); ?>"/>
-					<span class ="text-danger">
+					<span class="text-danger">
 					<?php echo form_error('address'); ?>
 					</span>
 				</div>
@@ -55,7 +55,7 @@
 					<input class="form-control"
 						   type="tel" name="number"
 						   value="<?php echo set_value('number'); ?>"/>
-					<span class ="text-danger">
+					<span class="text-danger">
 					<?php echo form_error('number'); ?>
 					</span>
 				</div>
